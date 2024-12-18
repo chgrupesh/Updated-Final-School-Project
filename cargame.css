@@ -1,0 +1,266 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  overflow: hidden;
+  animation: bodyColorChange 10s ease-in-out infinite; /* Color changing animation */
+}
+
+/* Game Interface (Contains Start Button) */
+#gameInterface {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 30px;
+  z-index: 2; /* Ensure the start button is above the game area */
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 2s ease-in-out;
+}
+
+#gameInterface h1 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Start Button */
+#startButton {
+  padding: 15px 30px;
+  background-color: #27ae60;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+#startButton:hover {
+  background-color: #2ecc71;
+  transform: scale(1.1);
+}
+
+#startButton:active {
+  background-color: #27ae60;
+  transform: scale(1);
+}
+
+/* Game Area */
+#game {
+  position: absolute;
+  width: 400px;
+  height: 600px;
+  background: linear-gradient(to bottom, #2c3e50 0%, #34495e 100%);
+  border: 3px solid #333;
+  overflow: hidden;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  display: none; /* Hide game area by default */
+  background-size: cover;
+  background-position: center;
+  z-index: 1; /* Ensure game area is below the start button */
+}
+
+/* Road Texture or Look */
+#game::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('road-texture.jpg'); /* You can replace this with any road texture image */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: -1;
+}
+
+/* Player Car */
+#playerCar {
+  position: absolute;
+  bottom: 10px;
+  left: 175px;
+  width: 50px;
+  height: 100px;
+  background-image: url('player-car.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+  border: 2px solid green; /* Player car hitbox */
+}
+
+/* Score and Fuel Display */
+#score, #fuel {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+
+#score {
+  top: 10px;
+  left: 20px;
+  color: #ecf0f1;
+}
+
+#fuel {
+  top: 10px;
+  right: 20px;
+  color: #1abc9c;
+}
+
+/* Enemy Cars (Updated with Image and Hitbox) */
+.enemyCar {
+  position: absolute;
+  width: 50px; /* Desired width in the game */
+  height: 100px; /* Desired height in the game */
+  background-image: url('enemy-car.png');
+  background-size: contain; /* Maintain aspect ratio */
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid red; /* Red border for enemy car hitbox */
+}
+
+@keyframes moveEnemy {
+  from {
+    top: -100px;
+  }
+  to {
+    top: 600px;
+  }
+}
+
+/* Fuel Items (Green Circles) */
+.fuelItem {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #1abc9c;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.7);
+  animation: moveFuel 4s linear infinite;
+}
+
+@keyframes moveFuel {
+  from {
+    top: -30px;
+  }
+  to {
+    top: 600px;
+  }
+}
+
+.fuelItem, .pointItem {
+  position: absolute;
+  width: 30px;  /* Same size for both fuel and point items */
+  height: 30px;  /* Same size for both fuel and point items */
+  border-radius: 50%;
+  background-color: #8800ff;  /* Or use any other color for fuel item */
+}
+
+.pointItem {
+  background-color: #ffcc00;  /* Change this to a different color for point item */
+}
+
+@keyframes movePointItem {
+  from {
+    top: -30px;
+  }
+  to {
+    top: 600px;
+  }
+}
+
+/* Game Over Interface */
+#gameOverInterface {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out; /* Add fade-in animation */
+}
+
+#gameOverInterface .final-score {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+#restartButton {
+  padding: 10px 20px;
+  background-color: #27ae60;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#restartButton:hover {
+  background-color: #2ecc71;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Color Changing Animation for Body */
+@keyframes bodyColorChange {
+  0% {
+    background-color: #2c3e50; /* Initial color */
+  }
+  20% {
+    background-color: #4f6d7a; /* Color 1 */
+  }
+  40% {
+    background-color: #2980b9; /* Color 2 */
+  }
+  60% {
+    background-color: #8e44ad; /* Color 3 */
+  }
+  80% {
+    background-color: #e74c3c; /* Color 4 */
+  }
+  100% {
+    background-color: #2c3e50; /* Back to the initial color */
+  }
+}

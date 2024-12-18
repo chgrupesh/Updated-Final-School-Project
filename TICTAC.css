@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #BFB59E;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+.game-body {
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.game {
+    height: 60vh;
+    width: 60vh;
+    display: flex;
+    justify-content: center;
+    gap: 1.3vmin;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.box {
+    background-color: #fff;
+    align-items: center;
+    height: 19vmin;
+    width: 19vmin;
+    color: crimson;
+    font-size: 7vmin;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, background-color 0.2s;
+}
+
+.box:hover {
+    transform: scale(1.1);
+    background-color: #f0f0f0;
+}
+
+#reset-button, #new-button {
+    padding: 1rem;
+    font-size: 1.3rem;
+    background-color: navy; /* Updated to Navy Blue */
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+#reset-button:hover, #new-button:hover {
+    background-color: #2a2a9d; /* A slightly lighter Navy Blue on hover */
+    transform: scale(1.1);
+}
+
+#msg {
+    color: purple;
+    font-size: 5vmin;
+    opacity: 0;
+    transform: translateY(-20px); /* Starts a bit higher */
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.msg-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
+    opacity: 0;
+    transform: translateY(30px); /* Starts lower and moves up */
+    transition: opacity 1s ease, transform 1s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Adds a blur effect to the background */
+}
+
+.msg-container.show {
+    opacity: 1;
+    transform: translateY(0); /* Moves up smoothly */
+}
+
+.hide {
+    display: none;
+}
+
+.winning-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: crimson;
+    transition: all 1s ease-in-out;
+}
+
+@keyframes winnerAnimation {
+    0% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+.winning-line.active {
+    animation: winnerAnimation 0.5s forwards;
+}
